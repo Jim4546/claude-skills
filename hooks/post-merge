@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# git pull / merge 后（例如换台机器拉更新）自动重新部署
+exec "$(git rev-parse --show-toplevel)/deploy.sh"
