@@ -10,6 +10,7 @@
 | [daily-report](./daily-report) | 自动日报：扫多个 Claude Code 窗口在不同项目下的工作，按项目分组汇总，发布到飞书知识库「开发日报」 | 「写日报」「发布日报」 |
 | [personal-worklog](./personal-worklog) | 个人工作小结（全天版）：提炼「你本人」做了什么（拆需求、拍板、纠正 AI、把控节奏），写入飞书 wiki | 「写今天的 worklog」 |
 | [minutes-clip-resummary](./minutes-clip-resummary) | 裁剪长录音/飞书妙记指定片段并重新生成智能会议纪要 | 「裁剪录音重做纪要」 |
+| [image-recolor-transparent](./image-recolor-transparent) | 图片配色改造+精细透明底：红→橙、灰黑→蓝灰(68,84,106)，连通域+迭代吸收抠白底（含封闭白区/文字镂空），羽化去白边，双底色预览验收 | 「按模板色系改色抠透明底」 |
 
 > daily-report / personal-worklog 内含个人飞书知识库节点配置，使用前按各自 SKILL.md 改成你自己的节点。
 
