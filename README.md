@@ -11,6 +11,7 @@
 | [personal-worklog](./personal-worklog) | 个人工作小结（全天版）：提炼「你本人」做了什么（拆需求、拍板、纠正 AI、把控节奏），写入飞书 wiki | 「写今天的 worklog」 |
 | [minutes-clip-resummary](./minutes-clip-resummary) | 裁剪长录音/飞书妙记指定片段并重新生成智能会议纪要 | 「裁剪录音重做纪要」 |
 | [image-recolor-transparent](./image-recolor-transparent) | 图片配色改造+精细透明底：红→橙、灰黑→蓝灰(68,84,106)，连通域+迭代吸收抠白底（含封闭白区/文字镂空），羽化去白边，双底色预览验收 | 「按模板色系改色抠透明底」 |
+| [article-origin-finder](./article-origin-finder) | 给定文章 URL（常被反爬/被墙、或属中文转载/编译稿），本机浏览器绕反爬抓正文、溯源到英文原文、多源交叉核实真伪，整理成飞书云文档（信息表+英文原文全文+中英核对表）；拿不到飞书时降级本地文件。需 `pip install playwright && playwright install chromium` | 「找原文」「英文原文」「溯源」 |
 
 > daily-report / personal-worklog 内含个人飞书知识库节点配置，使用前按各自 SKILL.md 改成你自己的节点。
 
