@@ -39,6 +39,16 @@ lark-cli auth login --domain docs
 
 没有 lark-cli 也能用——skill 会自动降级，把结果存成本地 `名称_YYYYMMDD.md`。
 
+### 3. yt-dlp（原文是播客 / 视频时用，可选）
+
+当原文是**口播访谈**（YouTube / 播客 / 视频），没有现成英文文章时，skill 会取逐字稿作为"英文原文全文"。优先用节目官方 transcript；拿不到则用 yt-dlp 拉字幕：
+
+```bash
+pip install yt-dlp
+```
+
+只处理书面文章则不需要它。
+
 ## 用法
 
 在 Claude Code 里直接说，例如：
