@@ -1,0 +1,18 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.DS_Store
+Thumbs.db
+
+# scratch work products created when running the pipeline
+raw/
+clone_imgs/
+seg/
+mirror_work/
+source.json
+doc_content.md
+clone_manifest.json
+clone_preprocessed.md
+plan.json
+build_state.json

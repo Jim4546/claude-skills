@@ -1,0 +1,11 @@
+{
+  "wiki_space_id": "<飞书知识库 space_id>",
+  "parent_node_token": "<「开发日报」父节点 node_token>",
+  "title_format": "王佳玮工作日报_{yyyymmdd}",
+  "group_chat_id": "<推送目标群 chat_id，留空则不推群>",
+  "chat_exclude": [],
+  "manage_grant_users": [
+    { "name": "陈曦", "open_id": "" },
+    { "name": "刘涛瑜", "open_id": "" }
+  ]
+}

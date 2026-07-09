@@ -1,0 +1,5 @@
+{
+  "wiki_space_id": "请填入团队共享知识库的 space_id",
+  "parent_node_token": "请填入「公众号归档」节点的 node_token（可选，不填则归档到知识库根目录）",
+  "lark_identity": "user"
+}

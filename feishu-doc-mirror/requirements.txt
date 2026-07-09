@@ -1,0 +1,2 @@
+# Image-recovery step only. lark-cli is a separate, externally-installed CLI.
+playwright>=1.40
