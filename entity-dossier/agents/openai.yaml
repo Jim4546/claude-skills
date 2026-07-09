@@ -1,0 +1,4 @@
+interface:
+  display_name: "Entity Dossier"
+  short_description: "Research a company and person into a sourced Feishu dossier."
+  default_prompt: "Use entity-dossier to research a company and person, then produce a sourced Feishu cloud document."
