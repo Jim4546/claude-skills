@@ -1,45 +1,105 @@
-# claude-skills
+# ai-workflow-skills
 
-个人 [Claude Code](https://claude.com/claude-code) Skill 集合。把成熟、可复用的工作流封装成 Skill，跨项目复用、版本化维护。
+AI 工作流 Skill 合集。这里集中维护一组成熟、可复用的 Claude Code / Codex 工作流能力，用来处理日常办公、研究尽调、内容归档、日报生成、文档转换和图片处理。
+
+本仓库采用“一个 skill 一个根目录”的结构：每个目录里都有 `SKILL.md`，安装后会被 Claude Code 自动识别。仓库是唯一真相源，`~/.claude/skills/<name>` 只是部署产物。
 
 ## 收录的 Skill
 
-| Skill | 作用 | 触发 |
-|---|---|---|
-| [devflow](./devflow) | 文档驱动开发工作流：`idea→plan→RU→verify→simplify→commit` 六步法，强制「需求(PRD)↔文档(SPEC/原型)↔代码」三方永远对齐。任何项目通用，支持小任务轻量模式 | `/devflow <阶段> <任务>` |
-| [daily-report](./daily-report) | 自动日报：扫多个 Claude Code 窗口在不同项目下的工作，按项目分组汇总，发布到飞书知识库「开发日报」 | 「写日报」「发布日报」 |
-| [personal-worklog](./personal-worklog) | 个人工作小结（全天版）：提炼「你本人」做了什么（拆需求、拍板、纠正 AI、把控节奏），写入飞书 wiki | 「写今天的 worklog」 |
-| [minutes-clip-resummary](./minutes-clip-resummary) | 裁剪长录音/飞书妙记指定片段并重新生成智能会议纪要 | 「裁剪录音重做纪要」 |
-| [entity-dossier](./entity-dossier) | 企业与人物背调信息整理稿：检索公开可靠资料，生成含持股、任职时间线、图示和来源附录的飞书云文档 | `$entity-dossier` / 「企业背调」 |
-| [image-recolor-transparent](./image-recolor-transparent) | 图片配色改造+精细透明底：红→橙、灰黑→蓝灰(68,84,106)，连通域+迭代吸收抠白底（含封闭白区/文字镂空），羽化去白边，双底色预览验收 | 「按模板色系改色抠透明底」 |
-| [article-origin-finder](./article-origin-finder) | 给定文章 URL（常被反爬/被墙、或属中文转载/编译稿），本机浏览器绕反爬抓正文、溯源到英文原文、多源交叉核实真伪，整理成飞书云文档（信息表+英文原文全文+中英核对表）；拿不到飞书时降级本地文件。需 `pip install playwright && playwright install chromium` | 「找原文」「英文原文」「溯源」 |
+| 分组 | Skill | 能做什么 | 常用说法 |
+|---|---|---|---|
+| 开发流程 | [devflow](./devflow) | 文档驱动开发工作流：`idea -> plan -> RU -> verify -> simplify -> commit`，让需求、文档和代码保持一致。 | `/devflow`、`/plan`、`/verify` |
+| 日报与复盘 | [daily-report](./daily-report) | 汇总多个 Claude Code 窗口的当天工作，按项目发布到飞书开发日报。 | “写日报”“发布日报” |
+| 日报与复盘 | [personal-worklog](./personal-worklog) | 写个人工作小结，强调“我本人”如何拆需求、拍板、纠正 AI、把控节奏。 | “写今天的 worklog”“总结我今天做了什么” |
+| 日报与复盘 | [work-review](./work-review) | 一次扫本地对话、飞书会话和今日会议，产出对外汇报用的精简日报并发布到飞书。 | “精简日报”“工作日报精简版”“jjrb” |
+| 研究尽调 | [entity-dossier](./entity-dossier) | 做企业、人物、投资方信息整理稿，生成带来源、时间线、股权和图示的飞书文档。 | `$entity-dossier`、“企业背调”“人物背调” |
+| 研究尽调 | [ipo-peer-intelligence](./ipo-peer-intelligence) | 对拟上市公司、同行、竞对、供应商或投资标的做证据优先的 IPO / 产业尽调分析。 | “IPO 尽调”“同行对标”“竞对分析” |
+| 内容归档 | [article-origin-finder](./article-origin-finder) | 给定文章 URL，抓正文、找英文原文、多源核实，并整理成飞书或本地文档。 | “找原文”“英文原文”“溯源” |
+| 内容归档 | [feishu-doc-mirror](./feishu-doc-mirror) | 把飞书分享文档或社区文章镜像到自己的飞书空间，复制正文、结构和图片。 | “镜像这篇飞书文章”“克隆到我的空间” |
+| 内容归档 | [wechat2lark](./wechat2lark) | 把微信公众号文章转成飞书云文档，并归档到团队知识库。 | “公众号转飞书”“转存公众号” |
+| 文档转换 | [spa-to-pdf](./spa-to-pdf) | 抓取 JS 渲染的 SPA 页面，生成带目录和链接的 Word / PDF。 | “把这个网页导出成 Word 和 PDF” |
+| 会议处理 | [minutes-clip-resummary](./minutes-clip-resummary) | 裁剪长录音或飞书妙记片段，并重新生成智能会议纪要。 | “裁剪录音重做纪要”“妙记截取片段” |
+| 图片处理 | [image-recolor-transparent](./image-recolor-transparent) | 按 PPT 模板色系给图片重映射配色，并精细抠成透明底。 | “按模板色系改色抠透明底” |
 
-> daily-report / personal-worklog 内含个人飞书知识库节点配置，使用前按各自 SKILL.md 改成你自己的节点。
+## 安装
 
-## 单一真相源 + 自动部署（重要）
-
-**本仓库是 skill 的唯一真相源**；`~/.claude/skills/<name>` 是部署产物，**请勿手改**（改了会在下次部署时被覆盖）。
-
-Windows 不允许无管理员创建 symlink，且 Claude Code 不识别 Junction，所以这里用「仓库 + git 钩子自动部署」消除两份漂移：
-
-- `hooks/post-commit`、`hooks/post-merge` 会在 **commit / pull 后自动**把每个 skill 拷到 `~/.claude/skills/`（已通过 `core.hooksPath=hooks` 启用，钩子本身纳入版本管理）。
-- 日常流程：**只在本仓库里改 skill → `git commit`** → 自动部署，skills 目录立即同步。
-- 需要时手动部署：`bash deploy.sh`（Git Bash）或 `powershell -File deploy.ps1`。
-
-### 首次在新机器上启用
+首次安装：
 
 ```bash
-git clone https://github.com/Jim4546/claude-skills.git
-cd claude-skills
-git config core.hooksPath hooks   # 启用自动部署钩子
-bash deploy.sh                    # 先部署一次
+git clone https://github.com/Jim4546/ai-workflow-skills.git
+cd ai-workflow-skills
+git config core.hooksPath hooks
+bash deploy.sh
 ```
 
-之后在任意项目用 `/<skill 名>` 调起（如 `/devflow`）。
+Windows PowerShell 用户也可以运行：
+
+```powershell
+git clone https://github.com/Jim4546/ai-workflow-skills.git
+cd ai-workflow-skills
+git config core.hooksPath hooks
+powershell -ExecutionPolicy Bypass -File .\deploy.ps1
+```
+
+部署后，每个含 `SKILL.md` 的根目录都会被复制到 `~/.claude/skills/<skill-name>`。Claude Code 重启或刷新后即可按自然语言触发。
+
+更多面向同事的步骤见 [安装指南_图文.md](./安装指南_图文.md)，常用话术见 [使用手册_话术.md](./使用手册_话术.md)。
+
+## 更新
+
+本仓库启用了 git hooks：
+
+- `hooks/post-commit`：提交后自动部署到本机 `~/.claude/skills/`。
+- `hooks/post-merge`：`git pull` 或 merge 后自动部署。
+
+日常更新：
+
+```bash
+git pull
+bash deploy.sh
+```
+
+如果使用 PowerShell：
+
+```powershell
+git pull
+powershell -ExecutionPolicy Bypass -File .\deploy.ps1
+```
+
+## 目录结构
+
+```text
+ai-workflow-skills/
+├── <skill-name>/
+│   ├── SKILL.md
+│   ├── README.md              # 可选，面向使用者的中文说明
+│   ├── references/            # 可选，模板、坑位说明、输出规范
+│   ├── scripts/               # 可选，skill 需要调用的脚本
+│   └── requirements.txt       # 可选，Python 依赖
+├── deploy.ps1                 # Windows 部署脚本
+├── deploy.sh                  # Git Bash / macOS / Linux 部署脚本
+├── hooks/                     # commit / merge 后自动部署
+├── 使用手册_话术.md
+├── 安装指南_图文.md
+└── README.md
+```
 
 ## 维护约定
 
-- 一个 skill 一个目录，目录名 = `SKILL.md` frontmatter 的 `name`（kebab-case）。
-- **只在本仓库编辑**，不要直接改 `~/.claude/skills/` 下的副本。
-- 改 skill 后在 `SKILL.md` 的 `version` 递增（若有）。
-- 成熟改动走 commit / PR，保持可追溯。
+- 一个 skill 一个根目录，目录名必须等于 `SKILL.md` frontmatter 里的 `name`。
+- 新增 skill 时至少提供 `SKILL.md`，建议同时写中文 `README.md`。
+- 复杂工作流的坑位、模板和验收标准放在 `references/`。
+- 脚本放在 `scripts/`，路径按 skill 目录内相对路径处理。
+- 只在本仓库编辑 skill，不要直接改 `~/.claude/skills/` 下的部署副本。
+- 改完后提交到仓库，hooks 会自动同步到本机 skills 目录。
+
+## 依赖提示
+
+不同 skill 的依赖不一样：
+
+- 飞书相关 skill 通常需要 `lark-cli auth login`。
+- 抓网页、镜像图片、公众号归档等能力可能需要 Python 3.10+。
+- `spa-to-pdf` 的 PDF 和目录刷新依赖 Windows + Microsoft Word。
+- `feishu-doc-mirror` 和 `article-origin-finder` 的浏览器抓取需要 Playwright。
+
+具体依赖以各目录的 `README.md`、`SKILL.md` 和 `requirements.txt` 为准。

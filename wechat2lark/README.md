@@ -1,58 +1,67 @@
 # wechat2lark
 
-一个 Claude Code skill：把微信公众号文章转成飞书云文档（docx），自动归档到团队共享知识库。
+微信公众号归档 skill。它会把微信公众号文章转成飞书云文档，并归档到指定团队知识库节点，图片会嵌入文档，文档标题默认使用 `{文章标题}_{YYYYMMDD}`。
 
-## 这是什么
+## 适合什么场景
 
-在 Claude Code 里贴一个公众号链接，说一声「转到知识库」，skill 会：
+- 需要把公众号文章沉淀到飞书知识库。
+- 需要保留正文、图片、列表和表格，而不是只保存链接。
+- 团队希望统一把外部文章归档到指定 wiki 节点。
 
-1. 抓取文章 HTML、解析正文 + 图片
-2. 把图片下载下来，embed 到 docx
-3. 上传 docx 到飞书云空间
-4. 挂到团队共享知识库节点下，命名 `{文章标题}_{YYYYMMDD}`
-5. 返回 wiki 链接
+## 工作流程
 
-## 安装
+1. 抓取公众号 HTML。
+2. 解析标题、作者、发布时间和正文区域。
+3. 下载正文图片。
+4. 用 `python-docx` 构建 docx，图片直接嵌入。
+5. 通过 `lark-cli drive +import` 上传成飞书文档。
+6. 通过 `lark-cli wiki +move` 挂到知识库节点。
+7. 返回新的 wiki 链接。
+
+## 一次性准备
+
+需要 Python 3.10+：
 
 ```bash
-npx skills add <github_owner>/wechat2lark
+pip install -r scripts/requirements.txt
 ```
 
-或克隆到本地：
+需要已登录的 `lark-cli`：
 
 ```bash
-git clone https://github.com/<github_owner>/wechat2lark ~/.claude/skills/wechat2lark
+lark-cli auth login --domain docs
 ```
 
-## 前置依赖
+首次使用前，把 `config.example.json` 复制为 `config.json`，填入团队知识库配置。详细说明见 [references/setup.md](references/setup.md)。
 
-- Claude Code
-- [`lark-cli`](https://github.com/larksuite/cli) 已登录（团队应已用其他 lark-* skill 装过）
-- Python 3.10+ 和：`pip install requests beautifulsoup4 python-docx`
+## 常用说法
 
-## 配置（团队成员各自一次）
+- “帮我把这篇公众号转到知识库：<URL>”
+- “公众号转飞书：<URL>”
+- “把这篇微信文章归档成飞书文档：<URL>”
 
-详见 [references/setup.md](references/setup.md)。简单说就是把 `config.example.json` 拷为 `config.json` 并填入团队共享知识库的 `wiki_space_id`。
-
-## 使用
-
-在 Claude Code 里说：
-
-> 帮我把这篇公众号转到知识库：https://mp.weixin.qq.com/s/abcdef
-
-Claude 会自动触发本 skill。或者直接：
+## 也可以手动运行
 
 ```bash
 python scripts/convert.py --url <article_url> --config config.json
 ```
 
+## 关键文件
+
+| 文件 | 作用 |
+|---|---|
+| `SKILL.md` | 触发条件和整体流程 |
+| `config.example.json` | 配置样例 |
+| `references/setup.md` | 首次配置说明 |
+| `scripts/convert.py` | 主入口 |
+| `scripts/wechat.py` | 抓取和解析公众号文章 |
+| `scripts/docx_builder.py` | 构建 Word 文档 |
+| `scripts/lark.py` | 上传和归档到飞书 |
+| `用户手册.md` | 更详细的使用说明 |
+
 ## 限制
 
-- 不支持「关注后可见」的私密文章（需要登录态）
-- 短时间内转多篇可能被微信临时限流，错开几分钟即可
-- 文章中的视频卡片、小程序卡片只保留占位文本
-- 复杂排版的 `<section>` 嵌套样式不完全保真（保留文字 + 图片 + 列表 + 表格）
-
-## License
-
-MIT
+- 不支持“关注后可见”的私密文章。
+- 微信可能短时间限流，批量归档时建议错开时间。
+- 视频卡片、小程序卡片等复杂组件只保留文本提示。
+- 复杂排版会尽量保留内容，不承诺像素级还原。
